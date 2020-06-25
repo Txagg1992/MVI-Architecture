@@ -27,12 +27,14 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        //Use this always
         viewModel = activity?.run {
             ViewModelProvider(this).get(MainViewModel::class.java)
         }?: throw Exception("Invalid Activity")
     }
 
     fun subscribeObservers(){
+        //use viewLifecycleOwner in a fragment... not the activity
         viewModel.dataState.observe(viewLifecycleOwner, Observer{dataState ->
             println("*** Debug: DataState: $dataState ***")
             dataState.blogPosts?.let {blogPosts ->
